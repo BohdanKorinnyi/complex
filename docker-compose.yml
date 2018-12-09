@@ -1,0 +1,14 @@
+version: '3'
+services:
+  postgres:
+    image: 'postgres:latest'
+  redis:
+    image: 'redis:latest'
+  server:
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./server
+    volumes:
+      - /app/node_modules # don't try to override the folder
+      - ./server:/app # anytime the application tries to access anything inside the app directory inside the container
+                      # except the node_module folder it is going to essentially get redirected back to the server directory inside our current project folder
